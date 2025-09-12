@@ -10,7 +10,7 @@ JUnit is available at www.junit.org.
 This assignment is set up to use JUnit 5, so follow the instructions to 
 get the latest JUnit 5 standalone jar file named 
 
-   junit-platform-console-standalone-1.11.4.jar
+   junit-platform-console-standalone-1.13.4.jar
 
 Choose the "Platform" download button under the "Latest Release" block
 title on the right hand side of the JUnit home page. Then scroll down to 
@@ -101,8 +101,7 @@ classes should be exactly the same except for which class they reference
 Submitting the assignment
 =========================
 
-To submit this assignment, commit into your personal GitHub repository, 
-under a directory named "junit1", the following material:
+To submit this assignment, commit into your personal GitHub repository, the following material:
 
 1. Your java source files for Circle1Test and Circle2Test including all the
    test cases you created (they should contain the same exact tests).
