@@ -1,19 +1,20 @@
 
 /***
- * JUnit black-box tests for Circle1 (and Circle base class).
+ * JUnit black-box tests for Circle2 (and Circle base class).
  * Uses equivalence partitioning and boundary value analysis.
+ * Mirrors Circle1Test since both classes implement the same requirements.
  ***/
 import static org.junit.jupiter.api.Assertions.*;
 import org.junit.jupiter.api.*;
 
-public class Circle1Test
+public class Circle2Test
 {
-   private Circle1 circle1;
+   private Circle2 circle2;
 
    @BeforeEach
    public void setup()
    {
-      circle1 = new Circle1(1, 2, 3);
+      circle2 = new Circle2(1, 2, 3);
    }
 
    @AfterEach
@@ -25,7 +26,7 @@ public class Circle1Test
    @Test
    public void moveByPositiveOffsets()
    {
-      Point p = circle1.moveBy(1, 1);
+      Point p = circle2.moveBy(1, 1);
       assertTrue(p.x == 2 && p.y == 3);
    }
 
@@ -33,7 +34,7 @@ public class Circle1Test
    @Test
    public void moveByNegativeOffsets()
    {
-      Point p = circle1.moveBy(-1, -1);
+      Point p = circle2.moveBy(-1, -1);
       assertTrue(p.x == 0 && p.y == 1);
    }
 
@@ -41,7 +42,7 @@ public class Circle1Test
    @Test
    public void moveByZeroOffset()
    {
-      Point p = circle1.moveBy(0, 0);
+      Point p = circle2.moveBy(0, 0);
       assertTrue(p.x == 1 && p.y == 2);
    }
 
@@ -49,7 +50,7 @@ public class Circle1Test
    @Test
    public void moveByAsymmetricOffsets()
    {
-      Point p = circle1.moveBy(2, 5);
+      Point p = circle2.moveBy(2, 5);
       assertTrue(p.x == 3 && p.y == 7);
    }
 
@@ -59,7 +60,7 @@ public class Circle1Test
    @Test
    public void scaleByFactorGreaterThanOne()
    {
-      double r = circle1.scale(2.0);
+      double r = circle2.scale(2.0);
       assertEquals(6.0, r, 1e-9);
    }
 
@@ -67,7 +68,7 @@ public class Circle1Test
    @Test
    public void scaleByFractionalFactor()
    {
-      double r = circle1.scale(0.5);
+      double r = circle2.scale(0.5);
       assertEquals(1.5, r, 1e-9);
    }
 
@@ -75,7 +76,7 @@ public class Circle1Test
    @Test
    public void scaleByOne()
    {
-      double r = circle1.scale(1.0);
+      double r = circle2.scale(1.0);
       assertEquals(3.0, r, 1e-9);
    }
 
@@ -83,7 +84,7 @@ public class Circle1Test
    @Test
    public void scaleByNegativeFactorNoChange()
    {
-      double r = circle1.scale(-1.0);
+      double r = circle2.scale(-1.0);
       assertEquals(3.0, r, 1e-9);
    }
 
@@ -93,55 +94,55 @@ public class Circle1Test
    @Test
    public void intersectsOverlappingCircles()
    {
-      Circle1 other = new Circle1(2, 2, 3);
-      assertTrue(circle1.intersects(other));
+      Circle2 other = new Circle2(2, 2, 3);
+      assertTrue(circle2.intersects(other));
    }
 
    /** Circles clearly far apart, no intersection */
    @Test
    public void intersectsDistantCircles()
    {
-      Circle1 other = new Circle1(100, 100, 1);
-      assertFalse(circle1.intersects(other));
+      Circle2 other = new Circle2(100, 100, 1);
+      assertFalse(circle2.intersects(other));
    }
 
    /** Circles exactly touching at one point (boundary: d == r1 + r2) */
    @Test
    public void intersectsExactlyTouching()
    {
-      // circle1 center(1,2) r=3; other center(7,2) r=3; distance=6=3+3
-      Circle1 other = new Circle1(7, 2, 3);
-      assertTrue(circle1.intersects(other));
+      // circle2 center(1,2) r=3; other center(7,2) r=3; distance=6=3+3
+      Circle2 other = new Circle2(7, 2, 3);
+      assertTrue(circle2.intersects(other));
    }
 
    /** Circles just barely not touching (d slightly > r1 + r2) */
    @Test
    public void intersectsJustNotTouching()
    {
-      Circle1 other = new Circle1(7.01, 2, 3);
-      assertFalse(circle1.intersects(other));
+      Circle2 other = new Circle2(7.01, 2, 3);
+      assertFalse(circle2.intersects(other));
    }
 
    /** A circle intersects itself */
    @Test
    public void intersectsWithItself()
    {
-      assertTrue(circle1.intersects(circle1));
+      assertTrue(circle2.intersects(circle2));
    }
 
    /** Intersect is symmetric: A.intersects(B) == B.intersects(A) */
    @Test
    public void intersectsIsSymmetric()
    {
-      Circle1 other = new Circle1(4, 2, 1);
-      assertEquals(circle1.intersects(other), other.intersects(circle1));
+      Circle2 other = new Circle2(4, 2, 1);
+      assertEquals(circle2.intersects(other), other.intersects(circle2));
    }
 
    /** One circle completely inside another still counts as intersecting */
    @Test
    public void intersectsOneInsideOther()
    {
-      Circle1 inner = new Circle1(1, 2, 1);
-      assertTrue(circle1.intersects(inner));
+      Circle2 inner = new Circle2(1, 2, 1);
+      assertTrue(circle2.intersects(inner));
    }
 }

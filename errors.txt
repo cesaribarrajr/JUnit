@@ -1,0 +1,45 @@
+ERRORS FOUND AND FIXED
+======================
+
+1. Circle.moveBy() -- yOffset not used for y coordinate
+   File: Circle.java, method moveBy()
+   Bug: `center.y = center.y + xOffset;` uses xOffset for both x and y.
+   Found by: moveByAsymmetricOffsets (both Circle1Test and Circle2Test)
+   Fix: Changed to `center.y = center.y + yOffset;`
+
+2. Circle.scale() -- adds factor instead of multiplying
+   File: Circle.java, method scale()
+   Bug: `radius = radius + factor;` should multiply to scale, not add.
+   Found by: scaleByFactorGreaterThanOne (result was 5.0 instead of 6.0)
+   Fix: Changed to `radius = radius * factor;`
+
+3. Circle.scale() -- does not handle negative factor
+   File: Circle.java, method scale()
+   Bug: The Javadoc says "if negative, return without scaling" but the
+        original code performs the (incorrect) addition anyway.
+   Found by: scaleByNegativeFactorNoChange
+   Fix: Added guard: `if (factor < 0) return radius;` before scaling.
+
+4. Circle2() constructor -- x and y coordinates swapped
+   File: Circle2.java, constructor Circle2(double x, double y, double radius)
+   Bug: `super(y, x, radius);` passes y as x and x as y.
+   Found by: moveByAsymmetricOffsets on Circle2Test (center was (2,1) not (1,2))
+   Fix: Changed to `super(x, y, radius);`
+
+5. Circle2.intersects() -- uses only one radius, not the sum of both radii
+   File: Circle2.java, method intersects()
+   Bug: `if (d < radius)` checks only this circle's radius. Two circles
+        intersect when d <= r1 + r2.
+   Found by: intersectsOverlappingCircles (returned false for circles that
+             clearly overlap but whose centers are further apart than one radius)
+   Fix: Changed to `if (d <= radius + other.radius)`
+
+6. Circle1.intersects() -- uses bounding-box check instead of distance formula
+   File: Circle1.java, method intersects()
+   Bug: Checks `|dx| < radius && |dy| < radius`, which is a square not a
+        circle, and again uses only one radius instead of the sum of both.
+   Found by: intersectsExactlyTouching (diagonal touching circles returned
+             wrong result) and intersectsDistantCircles (corners of bounding
+             box could falsely indicate intersection)
+   Fix: Replaced with proper Euclidean distance check:
+        `d = sqrt((dx)^2 + (dy)^2); return d <= radius + other.radius;`
